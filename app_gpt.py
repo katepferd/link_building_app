@@ -128,58 +128,7 @@ This app helps you **generate, reserve, and apply** EXIDs to links for Email (`g
 """
 )
 
-"""with st.expander("1) Load existing EXIDs", expanded=True):
-    c1, c2 = st.columns(2)
-    with c1:
-        exids_text = st.text_area(
-            "Paste existing EXIDs (one per line)",
-            height=240,
-            placeholder="e.g.\ngaa2_AAB\ngaa2_AAC\nhaa2_AAA"
-        )
-        pasted = [x.strip() for x in exids_text.splitlines() if x.strip()]
 
-    with c2:
-        uploaded = st.file_uploader("...or upload a CSV with at least an `EXID` column", type=["csv"]) 
-        from_csv: List[str] = []
-        if uploaded:
-            try:
-                dfu = pd.read_csv(uploaded)
-                if "EXID" in dfu.columns:
-                    from_csv = dfu["EXID"].dropna().astype(str).tolist()
-                else:
-                    st.warning("No EXID column found; ignoring file.")
-            except Exception as e:
-                st.error(f"Failed to read CSV: {e}")
-
-    existing_exids = pasted + from_csv
-
-    # Show quick stats / validation
-    if existing_exids:
-        df_show = pd.DataFrame({"EXID": existing_exids})
-        df_show["Valid Format"] = df_show["EXID"].apply(lambda x: bool(EXID_RE.fullmatch(x)))
-        dupes = df_show["EXID"].duplicated(keep=False)
-        df_show["Duplicate"] = dupes
-        st.dataframe(df_show, use_container_width=True, hide_index=True)
-
-        # Latest per prefix
-        latest = {}
-        for label, prefix in PREFIXES.items():
-            codes = []
-            for ex in existing_exids:
-                try:
-                    pfx, code = parse_exid(ex)
-                except ValueError:
-                    continue
-                if pfx == prefix and re.fullmatch(r"[A-Z]{3}", code):
-                    codes.append(code)
-            if codes:
-                latest[label] = f"{prefix}_{max(codes)}"
-            else:
-                latest[label] = "(none)"
-        st.info("Latest seen → " + ", ".join([f"{k}: {v}" for k, v in latest.items()]))
-    else:
-        st.warning("No EXIDs loaded yet. We'll start from AAB for each channel by default.")
-"""
 st.divider()
 
 with st.expander("2) Generate EXID(s) for a campaign", expanded=True):
