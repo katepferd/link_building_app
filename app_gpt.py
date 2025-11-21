@@ -128,7 +128,7 @@ This app helps you **generate, reserve, and apply** EXIDs to links for Email (`g
 """
 )
 
-with st.expander("1) Load existing EXIDs", expanded=True):
+"""with st.expander("1) Load existing EXIDs", expanded=True):
     c1, c2 = st.columns(2)
     with c1:
         exids_text = st.text_area(
@@ -179,7 +179,7 @@ with st.expander("1) Load existing EXIDs", expanded=True):
         st.info("Latest seen → " + ", ".join([f"{k}: {v}" for k, v in latest.items()]))
     else:
         st.warning("No EXIDs loaded yet. We'll start from AAB for each channel by default.")
-
+"""
 st.divider()
 
 with st.expander("2) Generate EXID(s) for a campaign", expanded=True):
