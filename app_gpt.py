@@ -170,7 +170,7 @@ with st.expander("2) Generate EXID(s) for a campaign", expanded=True):
                 block.append(f"{channel_prefix}_{code}")
             start_block = block
         else:
-            start_block = next_n_for_channel(existing_exids, channel_prefix, reserve_n)
+            #start_block = next_n_for_channel(existing_exids, channel_prefix, reserve_n)
             start_block = start_block
 
         # Prepare URLs
