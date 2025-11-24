@@ -184,16 +184,13 @@ with st.expander("1) Load existing EXIDs", expanded=True):
 st.divider()
 
 with st.expander("2) Generate EXID(s) for a campaign", expanded=True):
-    colA, colB, colC, colD = st.columns([2, 1, 1, 1])
+    colA, colB, colC = st.columns([2, 1, 1])
     with colA:
         campaign_name = st.text_input("Campaign name", placeholder="e.g., Black Friday Launch")
     with colB:
         channel_label = st.selectbox("Channel", list('Email', 'SMS', 'Organic Social', 'Paid Social'))
-        #channel_prefix = PREFIXES[channel_label]
+        channel_prefix = PREFIXES[channel_label]
     with colC:
-        subchannel_label = st.selectionbox("Sub-channel", list(PREFIXES.keys()))
-        subchannel_prefix = PREFIXES[subchannel_label]
-    with colD:
         reserve_n = st.number_input("How many to reserve?", min_value=1, max_value=20, value=1, step=1,
                                     help="Use >1 for A/B tests or multi-link variants.")
 
