@@ -9,6 +9,7 @@ import streamlit as st
 # ------------------------------
 # Core EXID logic
 # ------------------------------
+
 PREFIXES = {
     'Email': 'gaa2',
     'SMS': 'haa2',
@@ -17,7 +18,7 @@ PREFIXES = {
     'Facebook Post': 'daa2'
 }
 
-EXID_RE = re.compile(r"^([a-z0-9]+)_([A-Z]{3})$")
+EXID_RE = re.compile(r"^([a-z]{3}2)_([A-Z]{3})$")
 
 
 def inc_code(code: str) -> str:
@@ -183,13 +184,16 @@ with st.expander("1) Load existing EXIDs", expanded=True):
 st.divider()
 
 with st.expander("2) Generate EXID(s) for a campaign", expanded=True):
-    colA, colB, colC = st.columns([2, 1, 1])
+    colA, colB, colC, colD = st.columns([2, 1, 1, 1])
     with colA:
         campaign_name = st.text_input("Campaign name", placeholder="e.g., Black Friday Launch")
     with colB:
-        channel_label = st.selectbox("Channel", list(PREFIXES.keys()))
-        channel_prefix = PREFIXES[channel_label]
+        channel_label = st.selectbox("Channel", list('Email', 'SMS', 'Organic Social', 'Paid Social'))
+        #channel_prefix = PREFIXES[channel_label]
     with colC:
+        subchannel_label = st.selectionbox("Sub-channel", list(PREFIXES.keys()))
+        subchannel_prefix = PREFIXES[subchannel_label]
+    with colD:
         reserve_n = st.number_input("How many to reserve?", min_value=1, max_value=20, value=1, step=1,
                                     help="Use >1 for A/B tests or multi-link variants.")
 
@@ -221,7 +225,9 @@ with st.expander("2) Generate EXID(s) for a campaign", expanded=True):
                 block.append(f"{channel_prefix}_{code}")
             start_block = block
         else:
-            start_block = next_n_for_channel(existing_exids, channel_prefix, reserve_n)
+            #start_block = next_n_for_channel(existing_exids, channel_prefix, reserve_n)
+            start_block = start_block
+            
 
         # Prepare URLs
         raw_urls = [u.strip() for u in urls_text.splitlines() if u.strip()]
@@ -306,3 +312,5 @@ with st.expander("Notes & Guardrails", expanded=False):
 - **Best practice**: maintain a single team CSV with columns like `EXID, Campaign, Channel, Owner, Date, URLs...` and import it here before assigning.
         """
     )
+
+
