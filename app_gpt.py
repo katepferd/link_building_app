@@ -188,7 +188,7 @@ with st.expander("2) Generate EXID(s) for a campaign", expanded=True):
     with colA:
         campaign_name = st.text_input("Campaign name", placeholder="e.g., Black Friday Launch")
     with colB:
-        channel_label = st.selectbox("Channel", list('Email', 'SMS', 'Organic Social', 'Paid Social'))
+        channel_label = st.selectbox("Channel", list(PREFIXES.keys()))
         channel_prefix = PREFIXES[channel_label]
     with colC:
         reserve_n = st.number_input("How many to reserve?", min_value=1, max_value=20, value=1, step=1,
