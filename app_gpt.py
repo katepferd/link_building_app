@@ -156,22 +156,18 @@ with st.expander("2) Generate EXID(s) for a campaign", expanded=True):
     if go:
         # Compute the block of EXIDs
         start_block: List[str]
-        if manual_override:
-            start_code = manual_override.strip().upper()
-            if not re.fullmatch(r"[A-Z]{3}", start_code):
-                st.error("Manual override must be exactly 3 letters A–Z (e.g., ADL).")
-                st.stop()
-            first_exid = f"{channel_prefix}_{start_code}"
-            # Build N codes ascending from manual start
-            block = [first_exid]
-            code = start_code
-            for _ in range(reserve_n - 1):
-                code = inc_code(code)
-                block.append(f"{channel_prefix}_{code}")
-            start_block = block
-        else:
-            #start_block = next_n_for_channel(existing_exids, channel_prefix, reserve_n)
-            start_block = start_block
+        start_code = manual_override.strip().upper()
+        if not re.fullmatch(r"[A-Z]{3}", start_code):
+            st.error("Manual override must be exactly 3 letters A–Z (e.g., ADL).")
+            st.stop()
+        first_exid = f"{channel_prefix}_{start_code}"
+        # Build N codes ascending from manual start
+        block = [first_exid]
+        code = start_code
+        for _ in range(reserve_n - 1):
+            code = inc_code(code)
+            block.append(f"{channel_prefix}_{code}")
+        start_block = block
 
         # Prepare URLs
         raw_urls = [u.strip() for u in urls_text.splitlines() if u.strip()]
